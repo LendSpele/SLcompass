@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "id": "slcomp",
+  "version": "${version}",
+  "name": "SLcomp",
+  "description": "",
+  "authors": [],
+  "contact": {},
+  "license": "All-Rights-Reserved",
+  "icon": "assets/slcomp/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "org.lend.slcomp.client.SlcompClient"
+    ],
+    "main": [
+      "org.lend.slcomp.Slcomp"
+    ]
+  },
+  "mixins": [
+    "slcomp.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}
