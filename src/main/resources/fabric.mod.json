@@ -10,7 +10,7 @@
   "contact": {
     "homepage": "www.storylegends.xyz"
   },
-  "license": "All-Rights-Reserved",
+  "license": "MIT",
   "icon": "assets/slcomp/icon.png",
   "environment": "client",
   "entrypoints": {
