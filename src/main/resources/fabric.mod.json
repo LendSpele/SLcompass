@@ -3,11 +3,13 @@
   "id": "slcomp",
   "version": "${version}",
   "name": "SLcompass",
-  "description": "A mod for StoryLegends that allows you to see coordinates while holding a compass!",
+  "description": "A mod for StoryLegends that allows you to see coordinates while holding a compass or map!",
   "authors": [
     "LendSpele"
   ],
-  "contact": {},
+  "contact": {
+    "homepage": "www.storylegends.xyz"
+  },
   "license": "All-Rights-Reserved",
   "icon": "assets/slcomp/icon.png",
   "environment": "client",
@@ -17,7 +19,8 @@
     ],
     "main": [
       "org.lend.slcomp.Slcomp"
-    ]
+    ],
+    "modmenu": ["org.lend.slcomp.SLCompModMenu"]
   },
   "mixins": [
     "slcomp.mixins.json"

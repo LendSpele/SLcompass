@@ -5,35 +5,41 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.client.network.ServerInfo;
 import net.minecraft.item.Items;
 import net.minecraft.util.Hand;
+import java.util.Arrays;
 
 public class Slcomp implements ModInitializer {
 
-    private static final String TARGET_SERVER_IP = "mc.storylegends.xyz";
+    private SLCompConfig config;
+
+
 
     @Override
     public void onInitialize() {
+
+        ConfigManager.init();
+        config = ConfigManager.getConfig();
+
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
+            if (client.player == null || client.getCurrentServerEntry() == null) return;
 
-            if (client.player != null) {
-                ServerInfo serverInfo = client.getCurrentServerEntry();
+            ServerInfo serverInfo = client.getCurrentServerEntry();
 
+            boolean forceActive = serverInfo.address.equals(ConfigManager.MAIN_SERVER);
+            boolean onExtraServer = Arrays.asList(config.extraServers).contains(serverInfo.address);
+            boolean userEnabled = config.enabledOnOtherServers && onExtraServer;
 
-                if (serverInfo != null && serverInfo.address.equals(TARGET_SERVER_IP)) {
+            if (forceActive || userEnabled) {
+                boolean hasCompassInHand =
+                        client.player.getStackInHand(Hand.MAIN_HAND).getItem() == Items.COMPASS ||
+                                client.player.getStackInHand(Hand.OFF_HAND).getItem() == Items.COMPASS ||
+                                client.player.getStackInHand(Hand.MAIN_HAND).getItem() == Items.FILLED_MAP ||
+                                client.player.getStackInHand(Hand.OFF_HAND).getItem() == Items.FILLED_MAP;
 
+                boolean targetValue = !hasCompassInHand;
+                boolean currentValue = client.options.getReducedDebugInfo().getValue();
 
-                    boolean hasCompassInHand =
-                            client.player.getStackInHand(Hand.MAIN_HAND).getItem() == Items.COMPASS ||
-                                    client.player.getStackInHand(Hand.OFF_HAND).getItem() == Items.COMPASS;
-
-
-                    boolean targetValue = !hasCompassInHand;
-
-                    boolean currentValue = client.options.getReducedDebugInfo().getValue();
-
-                    if (currentValue != targetValue) {
-                        client.options.getReducedDebugInfo().setValue(targetValue);
-                        System.out.println("Синхронизировано значение 'Reduced Debug Info'.");
-                    }
+                if (currentValue != targetValue) {
+                    client.options.getReducedDebugInfo().setValue(targetValue);
                 }
             }
         });
