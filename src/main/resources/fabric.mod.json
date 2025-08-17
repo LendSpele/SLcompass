@@ -2,9 +2,11 @@
   "schemaVersion": 1,
   "id": "slcomp",
   "version": "${version}",
-  "name": "SLcomp",
-  "description": "",
-  "authors": [],
+  "name": "SLcompass",
+  "description": "A mod for StoryLegends that allows you to see coordinates while holding a compass!",
+  "authors": [
+    "LendSpele"
+  ],
   "contact": {},
   "license": "All-Rights-Reserved",
   "icon": "assets/slcomp/icon.png",
