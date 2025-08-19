@@ -30,7 +30,7 @@ public final class CompServer {
             ServerPlayerEntity player = context.player();
             if (player == null) return;
             // Ответ пришёл — снимаем игрока с ожидания
-            awaitingUntilTick.remove(player.getUuid());
+            awaitingUntilTick.remove(player.getGameProfile().getId());
         });
 
         // При входе игрока: шлём запрос и ставим дедлайн
@@ -38,17 +38,17 @@ public final class CompServer {
             ServerPlayerEntity player = handler.player;
             int nonce = ThreadLocalRandom.current().nextInt();
             ServerPlayNetworking.send(player, new HandshakeRequestPayload(nonce));
-            awaitingUntilTick.put(player.getUuid(), server.getTicks() + TIMEOUT_TICKS);
+            awaitingUntilTick.put(player.getGameProfile().getId(), server.getTicks() + TIMEOUT_TICKS);
         });
 
         // Очистка при выходе
         ServerPlayConnectionEvents.DISCONNECT.register((handler, server) -> {
             ServerPlayerEntity player = handler.player;
-            if (player != null) awaitingUntilTick.remove(player.getUuid());
+            if (player != null) awaitingUntilTick.remove(player.getGameProfile().getId());
         });
 
         // Проверка таймаутов
-        ServerTickEvents.END_SERVER_TICK.register(server -> checkTimeouts(server));
+        ServerTickEvents.END_SERVER_TICK.register(CompServer::checkTimeouts);
     }
 
     private static void checkTimeouts(MinecraftServer server) {
@@ -63,7 +63,8 @@ public final class CompServer {
                 if (player != null) {
                     ServerPlayNetworkHandler nh = player.networkHandler;
                     if (nh != null && nh.isConnectionOpen()) {
-                        nh.disconnect(Text.literal("The server requires the mod \"SLcompass\" installed").styled(s -> s.withColor(Formatting.RED)));
+                        nh.disconnect(Text.literal("The server requires the mod \"SLcompass\" installed")
+                                .styled(s -> s.withColor(Formatting.RED)));
                     }
                 }
                 return true;
