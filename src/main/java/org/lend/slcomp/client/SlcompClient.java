@@ -9,6 +9,11 @@ import org.lend.slcomp.client.network.CompClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import net.minecraft.text.Text;
+import net.minecraft.text.Style;
+import net.minecraft.util.Formatting;
+import net.minecraft.util.math.BlockPos;
+
 import java.util.Arrays;
 
 import static org.lend.slcomp.Slcomp.MOD_ID;
@@ -46,6 +51,26 @@ public class SlcompClient implements ClientModInitializer {
                                 client.player.getStackInHand(Hand.OFF_HAND).getItem() == Items.COMPASS ||
                                 client.player.getStackInHand(Hand.MAIN_HAND).getItem() == Items.FILLED_MAP ||
                                 client.player.getStackInHand(Hand.OFF_HAND).getItem() == Items.FILLED_MAP;
+
+                //  Отправка координат над хотбаром если включено
+
+                if (config.enabledCompassText && hasCompassInHand) {
+
+                    BlockPos playerPOS = client.player.getBlockPos();
+
+                    Text compass = Text.empty()
+                            .append(Text.literal("X: ").setStyle(Style.EMPTY.withColor(Formatting.RED)))
+                            .append(Text.literal(String.valueOf(playerPOS.getX())).setStyle(Style.EMPTY.withColor(Formatting.RED)))
+
+                            .append(Text.literal(" Y: ").setStyle(Style.EMPTY.withColor(Formatting.GREEN)))
+                            .append(Text.literal(String.valueOf(playerPOS.getY())).setStyle(Style.EMPTY.withColor(Formatting.GREEN)))
+
+                            .append(Text.literal(" Z: ").setStyle(Style.EMPTY.withColor(Formatting.AQUA)))
+                            .append(Text.literal(String.valueOf(playerPOS.getZ())).setStyle(Style.EMPTY.withColor(Formatting.AQUA)));
+
+                    client.player.sendMessage(compass, true);
+
+                }
 
                 boolean targetValue = !hasCompassInHand;
                 boolean currentValue = client.options.getReducedDebugInfo().getValue();

@@ -31,6 +31,15 @@ public class SLCompModMenuIntegration {
                         .build()
         );
 
+        general.addEntry(
+                entryBuilder.startBooleanToggle(Text.translatable("slcomp.config.compasstext"), config.enabledCompassText)
+                        .setSaveConsumer(newValue -> {
+                            config.enabledCompassText = newValue;
+                            AutoConfig.getConfigHolder(SLCompConfig.class).save();
+                        })
+                        .build()
+        );
+
         // Список дополнительных серверов
         general.addEntry(
                 entryBuilder.startStrList(

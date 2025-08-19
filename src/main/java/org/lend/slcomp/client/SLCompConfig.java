@@ -9,6 +9,8 @@ public class SLCompConfig implements ConfigData {
 
     public boolean enabledOnOtherServers = false;
 
+    public boolean enabledCompassText = true;
+
     public String[] extraServers = {};
 
     @ConfigEntry.Gui.Excluded // не показывать в ModMenu
