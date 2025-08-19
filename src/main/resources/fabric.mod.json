@@ -12,7 +12,7 @@
   },
   "license": "MIT",
   "icon": "assets/slcomp/icon.png",
-  "environment": "client",
+  "environment": "*",
   "entrypoints": {
     "client": [
       "org.lend.slcomp.client.SlcompClient"
@@ -20,7 +20,9 @@
     "main": [
       "org.lend.slcomp.Slcomp"
     ],
-    "modmenu": ["org.lend.slcomp.SLCompModMenu"]
+    "modmenu": [
+      "org.lend.slcomp.client.SLCompModMenu"
+    ]
   },
   "mixins": [
     "slcomp.mixins.json"
