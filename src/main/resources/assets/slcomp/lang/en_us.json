@@ -1,0 +1,8 @@
+{
+  "slcomp.config.title": "SLCompass Config",
+  "slcomp.config.category.general": "General Settings",
+  "slcomp.config.target_server_ip": "Server IP",
+  "slcomp.config.extra_servers" : "Extra servers",
+  "slcomp.config.enabled_others" : "Enable mod on others servers",
+  "slcomp.config.compasstext" : "Display coordinates over hotbar"
+}

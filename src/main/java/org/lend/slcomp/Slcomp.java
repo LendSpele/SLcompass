@@ -16,7 +16,7 @@ public class Slcomp implements ModInitializer {
     @Override
     public void onInitialize() {
 
-        LOGGER.info("\n \n SLcompass loaded! \n \n By L. (lendspele) 0/\n");
+        LOGGER.info("\n \n SLcompass loaded! - SERVER \n \n By L. (lendspele) 0/\n");
 
 
         ModPackets.registerPayloadTypes();

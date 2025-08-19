@@ -1,0 +1,8 @@
+{
+  "slcomp.config.title": "Настройки SLCompass",
+  "slcomp.config.category.general": "Основные настройки",
+  "slcomp.config.target_server_ip": "IP сервера",
+  "slcomp.config.extra_servers" : "Дополнительные Сервера",
+  "slcomp.config.enabled_others" : "Включить мод на других серверах",
+  "slcomp.config.compasstext" : "Показывать координаты над хотбаром"
+}
