@@ -4,5 +4,6 @@
   "slcomp.config.target_server_ip": "Server IP",
   "slcomp.config.extra_servers" : "Extra servers",
   "slcomp.config.enabled_others" : "Enable mod on others servers",
-  "slcomp.config.compasstext" : "Display coordinates over hotbar"
+  "slcomp.config.compasstext" : "Display coordinates over hotbar",
+  "slcomp.config.enabled_single" : "Enable mod in SinglePlayer"
 }

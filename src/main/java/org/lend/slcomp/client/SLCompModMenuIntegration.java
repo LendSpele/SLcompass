@@ -32,6 +32,15 @@ public class SLCompModMenuIntegration {
         );
 
         general.addEntry(
+                entryBuilder.startBooleanToggle(Text.translatable("slcomp.config.enabled_single"), config.enabledSingle)
+                        .setSaveConsumer(newValue -> {
+                            config.enabledSingle = newValue;
+                            AutoConfig.getConfigHolder(SLCompConfig.class).save();
+                        })
+                        .build()
+        );
+
+        general.addEntry(
                 entryBuilder.startBooleanToggle(Text.translatable("slcomp.config.compasstext"), config.enabledCompassText)
                         .setSaveConsumer(newValue -> {
                             config.enabledCompassText = newValue;
