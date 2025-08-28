@@ -16,7 +16,7 @@ SLCompass automatically enables the full debug screen (F3) when you hold a compa
 -   The client automatically remembers servers with the mod, and SLCompass is always enabled on them.
     
 -   Configurable directly in-game via ModMenu. You can add the IPs of the servers where the mod will work, and also enable the display of coordinates above the hotbar.
-<img width="1920" height="1001" alt="2025-08-17_17 57 07" src="https://github.com/user-attachments/assets/bb86b409-1e22-49d6-b994-abe76dc06bf9" />
+<img width="1920" height="1001" alt="2025-08-29_00 10 10" src="https://github.com/user-attachments/assets/08e4e633-af2e-4ab2-928f-71f24619605a" />
 
 
 
@@ -35,5 +35,4 @@ SLCompass автоматически включает полный экран о
 -   Клиент автоматически запоминает серверы с модом, и SLCompass всегда включён на них.
     
 -   Настройка через ModMenu прямо в игре. Вы можете добавить адрес серверов где мод будет работать, а так-же включить отображение координат над хотбаром.
-
-<img width="1920" height="1001" alt="2025-08-17_17 58 08" src="https://github.com/user-attachments/assets/2772a4f5-a4f7-4d6a-a5d1-ec3d60911af3" />
+<img width="1920" height="1001" alt="2025-08-29_00 09 37" src="https://github.com/user-attachments/assets/80bf8c4f-d1ba-4fa3-aff8-494db48a1e72" />
