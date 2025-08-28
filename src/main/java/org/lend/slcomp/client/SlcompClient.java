@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
 import net.minecraft.text.Text;
 import net.minecraft.text.Style;
 import net.minecraft.util.Formatting;
-import net.minecraft.util.math.BlockPos;
 
 import java.util.Arrays;
 
@@ -32,20 +31,24 @@ public class SlcompClient implements ClientModInitializer {
         LOGGER.info("\n \n SLcompass loaded! \n \n By L. (lendspele) 0/\n");
 
 
-        ConfigManager.init();
         CompClient.register();
 
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
-            if (client.player == null || client.getCurrentServerEntry() == null) return;
+            if (client.player == null) return;
+
+            if (client.getCurrentServerEntry() == null && client.getServer() == null) return;
 
             ServerInfo serverInfo = client.getCurrentServerEntry();
-            boolean forceActive = serverInfo.address.equals(ConfigManager.MAIN_SERVER);
-            boolean onExtraServer = Arrays.asList(config.extraServers).contains(serverInfo.address);
-            boolean userEnabled = config.enabledOnOtherServers && onExtraServer;
-            boolean permServer = serverInfo.address.equals(ConfigManager.getConfig().permanentServer);
+            boolean isSinglePlayer = client.getServer() != null;
 
-            if (forceActive || userEnabled || permServer) {
+            boolean forceActive = serverInfo != null && serverInfo.address.equals(ConfigManager.MAIN_SERVER);
+            boolean onExtraServer = serverInfo != null && Arrays.asList(config.extraServers).contains(serverInfo.address);
+            boolean userEnabled = config.enabledOnOtherServers && onExtraServer;
+            boolean permServer = serverInfo != null && serverInfo.address.equals(ConfigManager.getConfig().permanentServer);
+            boolean singleEnabled = config.enabledSingle && isSinglePlayer;
+
+            if (forceActive || userEnabled || permServer || singleEnabled) {
                 boolean hasCompassInHand =
                         client.player.getStackInHand(Hand.MAIN_HAND).getItem() == Items.COMPASS ||
                                 client.player.getStackInHand(Hand.OFF_HAND).getItem() == Items.COMPASS ||
@@ -56,17 +59,19 @@ public class SlcompClient implements ClientModInitializer {
 
                 if (config.enabledCompassText && hasCompassInHand) {
 
-                    BlockPos playerPOS = client.player.getBlockPos();
+                    String x = String.format("%.2f", client.player.getX());
+                    String y = String.format("%.2f", client.player.getY());
+                    String z = String.format("%.2f", client.player.getZ());
 
                     Text compass = Text.empty()
                             .append(Text.literal("X: ").setStyle(Style.EMPTY.withColor(Formatting.RED)))
-                            .append(Text.literal(String.valueOf(playerPOS.getX())).setStyle(Style.EMPTY.withColor(Formatting.RED)))
+                            .append(Text.literal(x).setStyle(Style.EMPTY.withColor(Formatting.RED)))
 
                             .append(Text.literal(" Y: ").setStyle(Style.EMPTY.withColor(Formatting.GREEN)))
-                            .append(Text.literal(String.valueOf(playerPOS.getY())).setStyle(Style.EMPTY.withColor(Formatting.GREEN)))
+                            .append(Text.literal(y).setStyle(Style.EMPTY.withColor(Formatting.GREEN)))
 
                             .append(Text.literal(" Z: ").setStyle(Style.EMPTY.withColor(Formatting.AQUA)))
-                            .append(Text.literal(String.valueOf(playerPOS.getZ())).setStyle(Style.EMPTY.withColor(Formatting.AQUA)));
+                            .append(Text.literal(z).setStyle(Style.EMPTY.withColor(Formatting.AQUA)));
 
                     client.player.sendMessage(compass, true);
 
