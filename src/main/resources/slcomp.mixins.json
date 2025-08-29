@@ -1,9 +1,10 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "org.lend.slcomp.mixin",
+  "package": "org.lend.slcomp.client.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "MixinXaeroMap"
   ],
   "client": [
   ],
