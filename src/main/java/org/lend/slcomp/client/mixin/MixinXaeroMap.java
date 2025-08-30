@@ -8,6 +8,7 @@ import net.minecraft.item.FilledMapItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
+import org.lend.slcomp.client.SlcompClient;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -23,6 +24,8 @@ public class MixinXaeroMap {
     @Inject(method = "render", at = @At("HEAD"), cancellable = true)
     private void onRender(CallbackInfo ci) {
         MinecraftClient mc = MinecraftClient.getInstance();
+
+        if (!SlcompClient.isModActive(mc)) return;
         if (mc.player == null) return;
 
         ItemStack main = mc.player.getMainHandStack();
@@ -40,8 +43,9 @@ public class MixinXaeroMap {
 
 
             if (player != null) {
-                client.player.sendMessage(Text.translatable("slcomp.map").styled(s -> s.withColor(Formatting.RED))
-                        , true);
+
+                Text map = Text.translatable("slcomp.map").styled(s -> s.withColor(Formatting.RED));
+                client.player.sendMessage(map, true);
             }
             ci.cancel();
         }

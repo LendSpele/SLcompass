@@ -2,6 +2,7 @@ package org.lend.slcomp.client;
 
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ServerInfo;
 import net.minecraft.item.Items;
 import net.minecraft.util.Hand;
@@ -23,6 +24,25 @@ public class SlcompClient implements ClientModInitializer {
 
     private SLCompConfig config;
 
+
+    public static boolean isModActive(MinecraftClient client) {
+        if (client.player == null) return false;
+        if (client.getCurrentServerEntry() == null && client.getServer() == null) return false;
+
+        ServerInfo serverInfo = client.getCurrentServerEntry();
+        boolean isSinglePlayer = client.getServer() != null;
+
+        SLCompConfig config = ConfigManager.getConfig();
+
+        boolean forceActive = serverInfo != null && serverInfo.address.equals(ConfigManager.MAIN_SERVER);
+        boolean onExtraServer = serverInfo != null && Arrays.asList(config.extraServers).contains(serverInfo.address);
+        boolean userEnabled = config.enabledOnOtherServers && onExtraServer;
+        boolean permServer = serverInfo != null && serverInfo.address.equals(config.permanentServer);
+        boolean singleEnabled = config.enabledSingle && isSinglePlayer;
+
+        return forceActive || userEnabled || permServer || singleEnabled;
+    }
+
     @Override
     public void onInitializeClient() {
         ConfigManager.init();
@@ -30,25 +50,10 @@ public class SlcompClient implements ClientModInitializer {
 
         LOGGER.info("\n \n SLcompass loaded! \n \n By L. (lendspele) 0/\n");
 
-
         CompClient.register();
 
-
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
-            if (client.player == null) return;
-
-            if (client.getCurrentServerEntry() == null && client.getServer() == null) return;
-
-            ServerInfo serverInfo = client.getCurrentServerEntry();
-            boolean isSinglePlayer = client.getServer() != null;
-
-            boolean forceActive = serverInfo != null && serverInfo.address.equals(ConfigManager.MAIN_SERVER);
-            boolean onExtraServer = serverInfo != null && Arrays.asList(config.extraServers).contains(serverInfo.address);
-            boolean userEnabled = config.enabledOnOtherServers && onExtraServer;
-            boolean permServer = serverInfo != null && serverInfo.address.equals(ConfigManager.getConfig().permanentServer);
-            boolean singleEnabled = config.enabledSingle && isSinglePlayer;
-
-            if (forceActive || userEnabled || permServer || singleEnabled) {
+            if (isModActive(client)) { // вызов метода
                 boolean hasCompassInHand =
                         client.player.getStackInHand(Hand.MAIN_HAND).getItem() == Items.COMPASS ||
                                 client.player.getStackInHand(Hand.OFF_HAND).getItem() == Items.COMPASS ||
@@ -56,9 +61,7 @@ public class SlcompClient implements ClientModInitializer {
                                 client.player.getStackInHand(Hand.OFF_HAND).getItem() == Items.FILLED_MAP;
 
                 //  Отправка координат над хотбаром если включено
-
                 if (config.enabledCompassText && hasCompassInHand) {
-
                     String x = String.format("%.2f", client.player.getX());
                     String y = String.format("%.2f", client.player.getY());
                     String z = String.format("%.2f", client.player.getZ());
@@ -74,7 +77,6 @@ public class SlcompClient implements ClientModInitializer {
                             .append(Text.literal(z).setStyle(Style.EMPTY.withColor(Formatting.AQUA)));
 
                     client.player.sendMessage(compass, true);
-
                 }
 
                 boolean targetValue = !hasCompassInHand;
