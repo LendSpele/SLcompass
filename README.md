@@ -1,6 +1,8 @@
 
 **Requires [cloth config](https://modrinth.com/mod/cloth-config)!**
 
+[![Modrinth Version](https://img.shields.io/modrinth/v/slcompass?style=flat-square&logo=Modrinth&logoSize=auto&label=Modrinth&color=00ae5d)](https://modrinth.com/mod/slcompass)
+
 # SLCompass English
 
 SLCompass automatically enables the full debug screen (F3) when you hold a compass or map. The mod works on servers where it is installed and supports easy configuration through ModMenu.
