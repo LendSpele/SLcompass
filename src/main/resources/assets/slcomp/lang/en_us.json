@@ -6,5 +6,6 @@
   "slcomp.config.enabled_others" : "Enable mod on others servers",
   "slcomp.config.compasstext" : "Display coordinates over hotbar",
   "slcomp.config.enabled_single" : "Enable mod in SinglePlayer",
-  "slcomp.map" : "To open the map, you will need a compass or a map"
+  "slcomp.map" : "To open the map, you will need a compass or a map",
+  "modmenu.descriptionTranslation.slcomp": "A mod for StoryLegends that allows you to see coordinates while holding a compass or map!"
 }
