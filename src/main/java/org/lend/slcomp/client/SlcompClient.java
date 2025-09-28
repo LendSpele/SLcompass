@@ -21,9 +21,9 @@ import static org.lend.slcomp.Slcomp.MOD_ID;
 public class SlcompClient implements ClientModInitializer {
 
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
-
     private SLCompConfig config;
 
+    private static Boolean originalReducedDebugInfo = null;
 
     public static boolean isModActive(MinecraftClient client) {
         if (client.player == null) return false;
@@ -53,7 +53,16 @@ public class SlcompClient implements ClientModInitializer {
         CompClient.register();
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
-            if (isModActive(client)) { // вызов метода
+            if (client.player == null) return;
+
+            boolean modActive = isModActive(client);
+
+            if (modActive) {
+                // сохраняем исходное значение
+                if (originalReducedDebugInfo == null) {
+                    originalReducedDebugInfo = client.options.getReducedDebugInfo().getValue();
+                }
+
                 boolean hasCompassInHand =
                         client.player.getStackInHand(Hand.MAIN_HAND).getItem() == Items.COMPASS ||
                                 client.player.getStackInHand(Hand.OFF_HAND).getItem() == Items.COMPASS ||
@@ -69,10 +78,8 @@ public class SlcompClient implements ClientModInitializer {
                     Text compass = Text.empty()
                             .append(Text.literal("X: ").setStyle(Style.EMPTY.withColor(Formatting.RED)))
                             .append(Text.literal(x).setStyle(Style.EMPTY.withColor(Formatting.RED)))
-
                             .append(Text.literal(" Y: ").setStyle(Style.EMPTY.withColor(Formatting.GREEN)))
                             .append(Text.literal(y).setStyle(Style.EMPTY.withColor(Formatting.GREEN)))
-
                             .append(Text.literal(" Z: ").setStyle(Style.EMPTY.withColor(Formatting.AQUA)))
                             .append(Text.literal(z).setStyle(Style.EMPTY.withColor(Formatting.AQUA)));
 
@@ -80,11 +87,17 @@ public class SlcompClient implements ClientModInitializer {
                 }
 
                 boolean targetValue = !hasCompassInHand;
-                boolean currentValue = client.options.getReducedDebugInfo().getValue();
-
-                if (currentValue != targetValue) {
+                if (client.options.getReducedDebugInfo().getValue() != targetValue) {
                     client.options.getReducedDebugInfo().setValue(targetValue);
                 }
+
+            } else {
+                // возврощаем исходник
+                if (originalReducedDebugInfo != null &&
+                        client.options.getReducedDebugInfo().getValue() != originalReducedDebugInfo) {
+                    client.options.getReducedDebugInfo().setValue(originalReducedDebugInfo);
+                }
+                originalReducedDebugInfo = null;
             }
         });
     }
