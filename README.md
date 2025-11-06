@@ -16,6 +16,8 @@ SLCompass automatically enables the full debug screen (F3) when you hold a compa
 -   Server synchronization: if the mod is installed on a server, it is active for all players.
     
 -   The client automatically remembers servers with the mod, and SLCompass is always enabled on them.
+
+-   After the game, returns F3 to its original form.
     
 -   Configurable directly in-game via ModMenu. You can add the IPs of the servers where the mod will work, and also enable the display of coordinates above the hotbar.
 <img width="1920" height="1001" alt="2025-08-29_00 10 10" src="https://github.com/user-attachments/assets/08e4e633-af2e-4ab2-928f-71f24619605a" />
@@ -35,6 +37,8 @@ SLCompass автоматически включает полный экран о
 -   Серверная синхронизация: если мод есть на сервере, он активен для всех игроков.
     
 -   Клиент автоматически запоминает серверы с модом, и SLCompass всегда включён на них.
+
+-   После игры возвращает F3 в исходную форму.
     
 -   Настройка через ModMenu прямо в игре. Вы можете добавить адрес серверов где мод будет работать, а так-же включить отображение координат над хотбаром.
 <img width="1920" height="1001" alt="2025-08-29_00 09 37" src="https://github.com/user-attachments/assets/80bf8c4f-d1ba-4fa3-aff8-494db48a1e72" />
