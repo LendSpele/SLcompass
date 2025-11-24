@@ -1,0 +1,11 @@
+{
+  "slcomp.config.title": "Ustawienia SLCompass",
+  "slcomp.config.category.general": "Ustawienia ogólne",
+  "slcomp.config.target_server_ip": "IP serwera",
+  "slcomp.config.extra_servers": "Dodatkowe serwery",
+  "slcomp.config.enabled_others": "Włączyć mod na obcych serwerach",
+  "slcomp.config.compasstext": "Pokazywać kordynaty nad hotbarem",
+  "slcomp.config.enabled_single": "Włączyć mod w pojedynczej grze",
+  "slcomp.map": "Żeby zobaczyć mapę, musisz posiadać kompas bądź mapę",
+  "modmenu.descriptionTranslation.slcomp": "Mod dla StoryLegends, który pozwała widzieć kordynaty, trzymając kompas bądź mapę w rękach!"
+}
